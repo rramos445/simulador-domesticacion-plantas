@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Evaluación Formativa en Línea • Carrera Agropecuaria</title>
+  <style>
+    :root {
+      --primary: #1b5e20;
+      --primary-light: #2e7d32;
+      --primary-soft: #e8f5e9;
+      --accent: #f57f17;
+      --bg: #f4f6f4;
+      --card: #ffffff;
+      --text: #1f2933;
+      --muted: #52606d;
+      --border: #d9e2ec;
+      --success: #15803d;
+      --success-bg: #dcfce7;
+      --danger: #b91c1c;
+      --danger-bg: #fee2e2;
+      --warning: #b45309;
+      --warning-bg: #fef3c7;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary) 0%, #103d14 100%);
+      color: #ffffff;
+      padding: 1.25rem 1.5rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    }
+
+    .header-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .brand-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      background: rgba(255, 255, 255, 0.16);
+      padding: 0.2rem 0.65rem;
+      border-radius: 999px;
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+
+    header h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    header p.subtitle {
+      font-size: 0.92rem;
+      opacity: 0.92;
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      max-width: 1040px;
+      margin: 1.75rem auto;
+      padding: 0 1rem;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 14px rgba(15, 23, 42, 0.05);
+      padding: 1.75rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Welcome Screen */
+    .welcome-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    @media (max-width: 780px) {
+      .welcome-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .meta-box {
+      background: var(--primary-soft);
+      border-left: 4px solid var(--primary);
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      margin: 1.25rem 0;
+    }
+
+    .meta-box p {
+      font-size: 0.92rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .meta-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+
+    .form-group input[type="text"] {
+      width: 100%;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input[type="text"]:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(27, 94, 32, 0.12);
+    }
+
+    .mode-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-top: 0.35rem;
+    }
+
+    .mode-option {
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      background: #fff;
+    }
+
+    .mode-option.active {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .mode-option strong {
+      display: block;
+      font-size: 0.95rem;
+      color: var(--primary);
+      margin-bottom: 0.2rem;
+    }
+
+    .mode-option span {
+      font-size: 0.82rem;
+      color: var(--muted);
+      display: block;
+      line-height: 1.35;
+    }
+
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      color: var(--text);
+      margin: 1rem 0 1.4rem;
+      cursor: pointer;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.72rem 1.35rem;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+    }
+
+    .btn-secondary {
+      background: #edf2f7;
+      color: var(--text);
+    }
+
+    .btn-secondary:hover {
+      background: #e2e8f0;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .btn-outline:hover {
+      background: #f8fafc;
+    }
+
+    .btn-warning {
+      background: var(--warning-bg);
+      color: var(--warning);
+      border: 1px solid #fcd34d;
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    /* Simulator Layout */
+    .sim-layout {
+      display: grid;
+      grid-template-columns: 1fr 270px;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    @media (max-width: 840px) {
+      .sim-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .top-status-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      padding-bottom: 1rem;
+      margin-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topic-badge {
+      background: var(--primary-soft);
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.82rem;
+      padding: 0.3rem 0.75rem;
+      border-radius: 999px;
+    }
+
+    .timer-badge {
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 0.35rem 0.85rem;
+      border-radius: 8px;
+      background: #f1f5f9;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .timer-badge.low {
+      background: var(--danger-bg);
+      color: var(--danger);
+      border-color: #fca5a5;
+    }
+
+    .progress-wrapper {
+      width: 100%;
+      height: 7px;
+      background: #e2e8f0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 1.25rem;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      width: 0%;
+      transition: width 0.25s ease;
+    }
+
+    .question-number {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.4rem;
+    }
+
+    .question-text {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 1.35rem;
+    }
+
+    .options-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.85rem;
+      width: 100%;
+      text-align: left;
+      padding: 0.95rem 1.1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      font-size: 0.98rem;
+      color: var(--text);
+      transition: all 0.15s ease;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: #94a3b8;
+      background: #f8fafc;
+    }
+
+    .option-btn.selected {
+      border-color: var(--primary);
+      background: var(--primary-soft);
+    }
+
+    .option-btn.correct {
+      border-color: var(--success);
+      background: var(--success-bg);
+      color: #14532d;
+    }
+
+    .option-btn.incorrect {
+      border-color: var(--danger);
+      background: var(--danger-bg);
+      color: #7f1d1d;
+    }
+
+    .option-letter {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #e2e8f0;
+      color: var(--text);
+      font-weight: 700;
+      font-size: 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 0.05rem;
+    }
+
+    .option-btn.selected .option-letter {
+      background: var(--primary);
+      color: #fff;
+    }
+
+    .option-btn.correct .option-letter {
+      background: var(--success);
+      color: #fff;
+    }
+
+    .option-btn.incorrect .option-letter {
+      background: var(--danger);
+      color: #fff;
+    }
+
+    .feedback-box {
+      margin-top: 1.25rem;
+      padding: 1rem 1.15rem;
+      border-radius: 8px;
+      font-size: 0.93rem;
+    }
+
+    .feedback-box.ok {
+      background: var(--success-bg);
+      border-left: 4px solid var(--success);
+      color: #14532d;
+    }
+
+    .feedback-box.bad {
+      background: var(--danger-bg);
+      border-left: 4px solid var(--danger);
+      color: #7f1d1d;
+    }
+
+    .nav-actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 1.75rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    /* Sidebar Navigator */
+    .nav-panel h3 {
+      font-size: 0.95rem;
+      margin-bottom: 0.75rem;
+      color: var(--text);
+    }
+
+    .q-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.45rem;
+      margin-bottom: 1rem;
+    }
+
+    .q-num-btn {
+      aspect-ratio: 1 / 1;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-weight: 600;
+      font-size: 0.88rem;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s;
+    }
+
+    .q-num-btn.current {
+      outline: 2px solid var(--primary);
+      outline-offset: 1px;
+    }
+
+    .q-num-btn.answered {
+      background: var(--primary-soft);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .q-num-btn.study-correct {
+      background: var(--success-bg);
+      border-color: var(--success);
+      color: var(--success);
+    }
+
+    .q-num-btn.study-wrong {
+      background: var(--danger-bg);
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .q-num-btn.flagged::after {
+      content: "";
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .legend {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 1.15rem;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    .dot {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+      display: inline-block;
+    }
+
+    /* Results Screen */
+    .results-header {
+      text-align: center;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .score-circle {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin: 0 auto 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      border: 6px solid var(--primary);
+      background: var(--primary-soft);
+      color: var(--primary);
+    }
+
+    .score-circle .big {
+      font-size: 1.8rem;
+      line-height: 1.1;
+    }
+
+    .score-circle .small {
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.85rem;
+      margin: 1.25rem 0;
+    }
+
+    @media (max-width: 650px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .stat-box {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.85rem;
+      text-align: center;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 1.25rem;
+      color: var(--text);
+    }
+
+    .stat-box span {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .review-item {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.1rem;
+      margin-bottom: 1rem;
+      background: #fff;
+    }
+
+    .review-item.ok {
+      border-left: 5px solid var(--success);
+    }
+
+    .review-item.bad {
+      border-left: 5px solid var(--danger);
+    }
+
+    .review-item h4 {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .review-meta {
+      font-size: 0.88rem;
+      margin-bottom: 0.35rem;
+    }
+
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div>
+        <span class="brand-tag">Asignatura</span>
+        <h1>Evaluación Formativa en Línea • Carrera Agropecuaria</h1>
+        <p class="subtitle">Fundamentos de la Producción Agrícola • Tema: Domesticación de las plantas cultivadas</p>
+      </div>
+      <div id="headerStudentBadge" class="hidden" style="text-align:right; font-size:0.85rem;"></div>
+    </div>
+  </header>
+
+  <main>
+    <!-- SCREEN 1: WELCOME -->
+    <section id="welcomeScreen" class="card">
+      <div class="welcome-grid">
+        <div>
+          <h2 style="font-size:1.4rem; margin-bottom:0.5rem;">Simulador de Evaluación Académica</h2>
+          <p style="color:var(--muted); font-size:0.95rem;">
+            Instrumento interactivo diseñado para evaluar la comprensión sobre los orígenes de la agricultura, los centros de domesticación, la selección artificial y el síndrome de la domesticación.
+          </p>
+
+          <div class="meta-box">
+            <p><strong>Docente:</strong> Ing. Rommel Ramos Remache</p>
+            <p><strong>Total de reactivos:</strong> <span id="totalQuestionsLabel">15</span> preguntas de opción múltiple (4 opciones, 1 correcta)</p>
+            <p><strong>Escala de calificación:</strong> 0 a 10 puntos (mínimo aprobatorio: 7.0)</p>
+          </div>
+
+          <h3 style="font-size:1rem; margin-bottom:0.5rem;">Contenidos evaluados:</h3>
+          <ul style="padding-left:1.25rem; color:var(--muted); font-size:0.9rem; display:flex; flex-direction:column; gap:0.3rem;">
+            <li>Surgimiento de la agricultura en el Holoceno y centros independientes de origen.</li>
+            <li>Diferencias entre recolección, sistemas silvícolas incipientes y agricultura.</li>
+            <li>Selección artificial (Darwin) y distinción entre cultivo y domesticación.</li>
+            <li>Rasgos del síndrome de domesticación y evolución del teocintle al maíz.</li>
+          </ul>
+        </div>
+
+        <div style="background:#f8fafc; padding:1.35rem; border-radius:10px; border:1px solid var(--border);">
+          <h3 style="font-size:1.05rem; margin-bottom:1rem;">Configuración del intento</h3>
+
+          <div class="form-group">
+            <label for="studentName">Nombre completo del estudiante (opcional)</label>
+            <input type="text" id="studentName" placeholder="Ej. María Fernanda López" />
+          </div>
+
+          <div class="form-group">
+            <label for="studentId">Módulo / Paralelo (opcional)</label>
+            <input type="text" id="studentId" placeholder="Ej. Módulo I - Paralelo A" />
+          </div>
+
+          <div class="form-group">
+            <label>Modalidad del simulador</label>
+            <div class="mode-selector">
+              <div class="mode-option active" id="modeStudyBtn" onclick="selectMode('study')">
+                <strong>Modo Estudio</strong>
+                <span>Retroalimentación inmediata después de responder cada pregunta.</span>
+              </div>
+              <div class="mode-option" id="modeExamBtn" onclick="selectMode('exam')">
+                <strong>Modo Examen</strong>
+                <span>Cronómetro de 20 minutos y calificación al finalizar todo el intento.</span>
+              </div>
+            </div>
+          </div>
+
+          <label class="checkbox-row">
+            <input type="checkbox" id="shuffleCheck" checked />
+            <span>Aleatorizar orden de preguntas y alternativas</span>
+          </label>
+
+          <button class="btn btn-primary btn-block" onclick="startQuiz()">Comenzar Simulador</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: SIMULATOR -->
+    <section id="quizScreen" class="hidden">
+      <div class="sim-layout">
+        <div class="card">
+          <div class="top-status-bar">
+            <span class="topic-badge" id="qTopic">Tema</span>
+            <div style="display:flex; align-items:center; gap:0.6rem;">
+              <span class="topic-badge" style="background:#eef2ff; color:#3730a3;" id="modeIndicator">Modo Estudio</span>
+              <span class="timer-badge" id="timerDisplay">00:00</span>
+            </div>
+          </div>
+
+          <div class="progress-wrapper">
+            <div class="progress-fill" id="progressBar"></div>
+          </div>
+
+          <div class="question-number" id="qNumberLabel">Pregunta 1 de 15</div>
+          <div class="question-text" id="qText">Enunciado de la pregunta</div>
+
+          <div class="options-list" id="optionsContainer"></div>
+
+          <div id="feedbackContainer" class="hidden"></div>
+
+          <div class="nav-actions">
+            <div style="display:flex; gap:0.5rem;">
+              <button class="btn btn-secondary" id="prevBtn" onclick="prevQuestion()">Anterior</button>
+              <button class="btn btn-outline" id="flagBtn" onclick="toggleFlag()">Marcar para revisar</button>
+            </div>
+            <div style="display:flex; gap:0.5rem;">
+              <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Siguiente</button>
+              <button class="btn btn-primary hidden" id="finishBtn" style="background:#14532d;" onclick="confirmFinish()">Finalizar intento</button>
+            </div>
+          </div>
+        </div>
+
+        <aside class="card nav-panel">
+          <h3>Navegación de reactivos</h3>
+          <div class="q-grid" id="navGrid"></div>
+
+          <div class="legend">
+            <div class="legend-item"><span class="dot" style="background:var(--primary-soft); border:1px solid var(--primary);"></span> Respondida</div>
+            <div class="legend-item"><span class="dot" style="background:#fff; border:1px solid var(--border);"></span> Sin responder</div>
+            <div class="legend-item"><span class="dot" style="background:var(--accent);"></span> Marcada para revisión</div>
+          </div>
+
+          <button class="btn btn-outline btn-block" onclick="confirmFinish()">Entregar evaluación</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: RESULTS -->
+    <section id="resultsScreen" class="card hidden">
+      <div class="results-header">
+        <div class="score-circle" id="scoreCircle">
+          <span class="big" id="finalGrade">0.0</span>
+          <span class="small">/ 10 pts</span>
+        </div>
+        <h2 id="resultStatusTitle" style="font-size:1.45rem; margin-bottom:0.25rem;">Resultados de la Evaluación</h2>
+        <p id="studentSummaryLine" style="color:var(--muted); font-size:0.95rem;"></p>
+
+        <div class="stats-row">
+          <div class="stat-box">
+            <strong id="statCorrect" style="color:var(--success);">0</strong>
+            <span>Aciertos</span>
+          </div>
+          <div class="stat-box">
+            <strong id="statIncorrect" style="color:var(--danger);">0</strong>
+            <span>Errores</span>
+          </div>
+          <div class="stat-box">
+            <strong id="statBlank">0</strong>
+            <span>Sin responder</span>
+          </div>
+          <div class="stat-box">
+            <strong id="statTime">00:00</strong>
+            <span>Tiempo empleado</span>
+          </div>
+        </div>
+
+        <div style="display:flex; flex-wrap:wrap; justify-content:center; gap:0.75rem; margin-top:1rem;">
+          <button class="btn btn-primary" onclick="restartQuiz()">Realizar nuevo intento</button>
+          <button class="btn btn-secondary" onclick="copyReport()">Copiar resumen de resultados</button>
+        </div>
+        <p id="copyToast" class="hidden" style="color:var(--success); font-size:0.85rem; margin-top:0.5rem; font-weight:600;">
+          Resumen copiado al portapapeles.
+        </p>
+      </div>
+
+      <h3 style="font-size:1.15rem; margin-bottom:1rem;">Revisión detallada por reactivo</h3>
+      <div id="reviewList"></div>
+    </section>
+  </main>
+
+  <footer>
+    Evaluación Formativa en Línea • Carrera Agropecuaria — Fundamentos de la Producción Agrícola • Ing. Rommel Ramos Remache
+  </footer>
+
+  <script>
+    const QUESTIONS_DB = [
+      {
+        id: 1,
+        topic: "Origen de la agricultura",
+        question: "Según la información presentada en el texto, ¿en qué época geológica surge la agricultura?",
+        options: [
+          "En el Holoceno, hace aproximadamente 10,000 años.",
+          "En el Pleistoceno temprano, hace alrededor de 50,000 años.",
+          "En el Mioceno tardío, hace cerca de 5 millones de años.",
+          "En el Paleolítico inferior, hace unos 100,000 años."
+        ],
+        correct: 0,
+        explanation: "Las evidencias arqueológicas indican que la agricultura surge en el Holoceno (hace unos 10,000 años), periodo caracterizado por un clima más estable y cálido en comparación con el Pleistoceno."
+      },
+      {
+        id: 2,
+        topic: "Centros de origen",
+        question: "¿Cuál es considerada la primera región donde apareció de forma independiente la agricultura y la domesticación de plantas?",
+        options: [
+          "El Medio Oriente (Creciente Fértil), entre 9,600 y 8,500 a. n. e.",
+          "China, alrededor de 7,500 a. n. e.",
+          "Mesoamérica, hacia el 3,500 a. n. e.",
+          "Los Andes y la Amazonia, entre 3,500 y 2,500 a. n. e."
+        ],
+        correct: 0,
+        explanation: "La agricultura aparece primero de forma independiente en el Medio Oriente (Creciente Fértil) entre 9,600 y 8,500 antes de nuestra era."
+      },
+      {
+        id: 3,
+        topic: "Centros de origen",
+        question: "¿Qué cultivos fueron los primeros cereales domesticados en el Medio Oriente (Creciente Fértil)?",
+        options: [
+          "El trigo (Triticum monococcum y T. dicoccum) y la cebada (Hordeum vulgare).",
+          "El arroz (Oryza sativa) y el sorgo (Sorghum bicolor).",
+          "El maíz (Zea mays) y el teff (Eragrostis tef).",
+          "La avena (Avena sativa) y el centeno (Secale cereale)."
+        ],
+        correct: 0,
+        explanation: "En el Medio Oriente (9,600 a 8,500 a. n. e.), los primeros cereales domesticados fueron el trigo (Triticum monococcum y T. dicoccum) y la cebada (Hordeum vulgare)."
+      },
+      {
+        id: 4,
+        topic: "Centros de origen",
+        question: "¿Cuáles fueron las principales plantas domesticadas en la región de Mesoamérica según el texto?",
+        options: [
+          "El maíz (Zea mays), el frijol (Phaseolus spp.) y la calabaza (Cucurbita pepo).",
+          "La papa (Solanum tuberosum) y la mandioca (Manihot esculenta).",
+          "El girasol (Helianthus annuus) y el quenopodio (Chenopodium berlandieri).",
+          "El arroz (Oryza sativa) y la soja (Glycine max)."
+        ],
+        correct: 0,
+        explanation: "En Mesoamérica la agricultura aparece hacia el 3,500 a. n. e., domesticándose principalmente el maíz, el frijol y la calabaza."
+      },
+      {
+        id: 5,
+        topic: "Recolección vs. Agricultura",
+        question: "De acuerdo con Braidwood (1960), ¿cuál es la diferencia fundamental entre la recolección de plantas y la agricultura?",
+        options: [
+          "La recolección implica cosechar productos naturales directamente, mientras que la agricultura transforma la naturaleza para controlar la disponibilidad de los recursos.",
+          "La recolección requiere herramientas metálicas especializadas y la agricultura únicamente recolección manual.",
+          "La recolección se practica exclusivamente en zonas tropicales húmedas y la agricultura en regiones templadas.",
+          "La recolección modifica el genotipo de las especies silvestres y la agricultura mantiene intactas sus características naturales."
+        ],
+        correct: 0,
+        explanation: "Para Braidwood (1960), recolectar consiste en cosechar productos naturales tal como se encuentran, mientras que la agricultura constituye un proceso productivo que transforma la naturaleza para controlar los recursos."
+      },
+      {
+        id: 6,
+        topic: "Sistemas silvícolas",
+        question: "¿En qué consisten los sistemas silvícolas según las evidencias citadas por Casas y colaboradores (1997)?",
+        options: [
+          "En la manipulación de poblaciones o comunidades de plantas silvestres mediante quemas, talas o manejo del agua para optimizar su aprovechamiento.",
+          "En el establecimiento de monocultivos intensivos con fertilización química en parcelas cercadas.",
+          "En la selección exclusiva de semillas transgénicas resistentes a plagas forestales.",
+          "En la recolección nómada sin ningún tipo de intervención o perturbación sobre la vegetación."
+        ],
+        correct: 0,
+        explanation: "Los sistemas silvícolas manipulan poblaciones o comunidades silvestres mediante quemas, talas intensivas o manejo del agua con el fin de promover la abundancia de ciertas plantas útiles."
+      },
+      {
+        id: 7,
+        topic: "Conceptos fundamentales",
+        question: "¿Cuál es la distinción conceptual que establece el artículo entre 'cultivo' y 'domesticación'?",
+        options: [
+          "El cultivo agrupa las formas de manejo de poblaciones o comunidades vegetales, mientras que la domesticación es un proceso evolutivo que resulta de manipular los genotipos.",
+          "El cultivo se aplica únicamente a especies animales y la domesticación exclusivamente a especies vegetales.",
+          "El cultivo ocurre de forma espontánea en la naturaleza y la domesticación requiere siempre ingeniería genética moderna.",
+          "Ambos términos son sinónimos exactos que describen la siembra anual de cereales."
+        ],
+        correct: 0,
+        explanation: "Aunque ambos integran la agricultura, el cultivo se refiere al conjunto de prácticas de manejo vegetal, mientras que la domesticación es un proceso evolutivo derivado de la selección genética."
+      },
+      {
+        id: 8,
+        topic: "Selección artificial",
+        question: "¿Quién describió por primera vez cómo opera la selección artificial favoreciendo la sobrevivencia de variantes deseables en plantas y animales?",
+        options: [
+          "Charles Darwin.",
+          "Gregor Mendel.",
+          "Nikolái Vavílov.",
+          "Carl Sauer."
+        ],
+        correct: 0,
+        explanation: "Charles Darwin, en sus obras de 1859 y 1868, describió por primera vez cómo opera la selección artificial tanto en plantas como en animales."
+      },
+      {
+        id: 9,
+        topic: "Síndrome de domesticación",
+        question: "¿Qué se entiende por 'síndrome de la domesticación' en el contexto del artículo?",
+        options: [
+          "El conjunto de rasgos morfológicos, fisiológicos y genéticos comunes que cambian en las plantas cultivadas respecto a sus parientes silvestres.",
+          "Una enfermedad viral que afecta exclusivamente a los cultivos modernos de cereales.",
+          "La incapacidad de las semillas silvestres para germinar fuera de su ecosistema original.",
+          "El agotamiento de los suelos agrícolas tras varios ciclos continuos de labranza."
+        ],
+        correct: 0,
+        explanation: "Se denomina síndrome de la domesticación al conjunto recurrente de cambios morfológicos y fisiológicos compartidos por diversas plantas domesticadas al compararlas con sus ancestros silvestres."
+      },
+      {
+        id: 10,
+        topic: "Síndrome de domesticación",
+        question: "¿Qué cambio anatómico característico del síndrome de domesticación impide que la semilla madura se desprenda sola de la planta?",
+        options: [
+          "La pérdida de los mecanismos de dispersión debido a la falta de una zona de abscisión.",
+          "El engrosamiento de la cutícula foliar y el cierre permanente de los estomas.",
+          "La multiplicación de raíces adventicias en los nudos superiores del tallo.",
+          "La lignificación extrema de los pétalos y sépalos de la flor."
+        ],
+        correct: 0,
+        explanation: "La pérdida de mecanismos de dispersión natural, asociada a la ausencia de una zona de abscisión, evita que los frutos o semillas caigan al suelo antes de que el agricultor los coseche."
+      },
+      {
+        id: 11,
+        topic: "Síndrome de domesticación",
+        question: "¿Cómo evoluciona la latencia de las semillas en las plantas domesticadas en comparación con sus parientes silvestres?",
+        options: [
+          "Se pierde o reduce para lograr una germinación rápida y uniforme tras la siembra.",
+          "Se prolonga durante varios años para evitar que germinen durante la temporada de lluvias.",
+          "Se vuelve completamente dependiente de incendios forestales periódicos.",
+          "Permanece idéntica a la de las poblaciones silvestres sin sufrir selección."
+        ],
+        correct: 0,
+        explanation: "Las plantas domesticadas pierden la latencia de sus semillas porque el agricultor requiere una germinación rápida y uniforme que permita al cultivo establecerse antes de competir con malezas."
+      },
+      {
+        id: 12,
+        topic: "Síndrome de domesticación",
+        question: "A nivel de arquitectura de la planta, ¿cuál es una modificación típica provocada por la selección de un mayor índice de cosecha?",
+        options: [
+          "La reducción o supresión de las ramas laterales.",
+          "El aumento en el número de tallos secundarios delgados y rastreros.",
+          "La disminución del tamaño del órgano cosechado respecto al follaje.",
+          "La maduración escalonada e irregular de los frutos a lo largo de todo el año."
+        ],
+        correct: 0,
+        explanation: "Seleccionar un mayor índice de cosecha (proporción de biomasa cosechable frente a la biomasa total) suele reducir o suprimir las ramificaciones laterales y concentrar recursos en el órgano útil."
+      },
+      {
+        id: 13,
+        topic: "Evolución del maíz",
+        question: "Con base en el texto y la Figura 3, ¿cuál es el pariente silvestre del cual deriva la planta de maíz (Zea mays)?",
+        options: [
+          "El teocintle.",
+          "El sorgo silvestre.",
+          "El mijo perla.",
+          "La cebada silvestre."
+        ],
+        correct: 0,
+        explanation: "El maíz (Zea mays) deriva de una gramínea silvestre mesoamericana llamada teocintle."
+      },
+      {
+        id: 14,
+        topic: "Evolución del maíz",
+        question: "Comparado con el maíz moderno, ¿qué características morfológicas presenta el teocintle en sus estructuras reproductivas?",
+        options: [
+          "Numerosas espigas pequeñas (de 6 a 7 cm) con una sola hilera de granos de aspecto triangular.",
+          "Una o dos mazorcas grandes con múltiples hileras de granos cuadrangulares.",
+          "Inflorescencias subterráneas desprovistas de brácteas protectoras.",
+          "Frutos carnosos indehiscentes con semillas aladas para dispersión por viento."
+        ],
+        correct: 0,
+        explanation: "A diferencia del maíz (1 a 3 tallos gruesos con grandes mazorcas y granos cuadrangulares), el teocintle posee numerosos tallos delgados con muchas espigas pequeñas de 6-7 cm y una sola hilera de granos triangulares."
+      },
+      {
+        id: 15,
+        topic: "Síndrome de domesticación",
+        question: "¿Qué desventaja o vulnerabilidad ecológica suelen presentar las plantas domesticadas al ser comparadas con sus parientes silvestres?",
+        options: [
+          "La pérdida o reducción de mecanismos naturales de defensa contra enemigos naturales.",
+          "La incapacidad total para realizar fotosíntesis en ambientes soleados.",
+          "La producción excesiva de toxinas alcaloides en sus órganos comestibles.",
+          "Una tasa de crecimiento inicial mucho más lenta que la de sus ancestros silvestres."
+        ],
+        correct: 0,
+        explanation: "Al enfocarse la selección humana en el tamaño, sabor y facilidad de cosecha, muchas plantas domesticadas perdieron o redujeron sus defensas físicas o químicas contra herbívoros y patógenos."
+      }
+    ];
+
+    let selectedMode = "study";
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let userAnswers = [];
+    let flagged = [];
+    let timerInterval = null;
+    let secondsElapsed = 0;
+    let examDuration = 20 * 60;
+    let studentInfo = { name: "", id: "" };
+
+    document.getElementById("totalQuestionsLabel").textContent = QUESTIONS_DB.length;
+
+    function selectMode(mode) {
+      selectedMode = mode;
+      document.getElementById("modeStudyBtn").classList.toggle("active", mode === "study");
+      document.getElementById("modeExamBtn").classList.toggle("active", mode === "exam");
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function startQuiz() {
+      studentInfo.name = document.getElementById("studentName").value.trim();
+      studentInfo.id = document.getElementById("studentId").value.trim();
+      const shouldShuffle = document.getElementById("shuffleCheck").checked;
+
+      let pool = QUESTIONS_DB.map((q) => {
+        const indexedOptions = q.options.map((text, idx) => ({
+          text,
+          isCorrect: idx === q.correct
+        }));
+        const finalOptions = shouldShuffle ? shuffleArray(indexedOptions) : indexedOptions;
+        return {
+          ...q,
+          shuffledOptions: finalOptions,
+          correctIndex: finalOptions.findIndex((o) => o.isCorrect)
+        };
+      });
+
+      activeQuestions = shouldShuffle ? shuffleArray(pool) : pool;
+      currentIndex = 0;
+      userAnswers = new Array(activeQuestions.length).fill(null);
+      flagged = new Array(activeQuestions.length).fill(false);
+      secondsElapsed = 0;
+
+      const badge = document.getElementById("headerStudentBadge");
+      if (studentInfo.name || studentInfo.id) {
+        badge.classList.remove("hidden");
+        badge.innerHTML = `<strong>${studentInfo.name || "Estudiante"}</strong>${studentInfo.id ? "<br>" + studentInfo.id : ""}`;
+      } else {
+        badge.classList.add("hidden");
+      }
+
+      document.getElementById("modeIndicator").textContent =
+        selectedMode === "study" ? "Modo Estudio" : "Modo Examen (20 min)";
+
+      document.getElementById("welcomeScreen").classList.add("hidden");
+      document.getElementById("resultsScreen").classList.add("hidden");
+      document.getElementById("quizScreen").classList.remove("hidden");
+
+      startTimer();
+      renderNavGrid();
+      renderQuestion();
+    }
+
+    function formatTime(totalSeconds) {
+      const mins = Math.floor(totalSeconds / 60);
+      const secs = totalSeconds % 60;
+      return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      const timerEl = document.getElementById("timerDisplay");
+      timerEl.classList.remove("low");
+
+      if (selectedMode === "exam") {
+        timerEl.textContent = formatTime(examDuration);
+        timerInterval = setInterval(() => {
+          secondsElapsed++;
+          const remaining = examDuration - secondsElapsed;
+          if (remaining <= 180) timerEl.classList.add("low");
+          if (remaining <= 0) {
+            timerEl.textContent = "00:00";
+            finishQuiz();
+          } else {
+            timerEl.textContent = formatTime(remaining);
+          }
+        }, 1000);
+      } else {
+        timerEl.textContent = "00:00";
+        timerInterval = setInterval(() => {
+          secondsElapsed++;
+          timerEl.textContent = formatTime(secondsElapsed);
+        }, 1000);
+      }
+    }
+
+    function renderQuestion() {
+      const q = activeQuestions[currentIndex];
+      const total = activeQuestions.length;
+      const chosen = userAnswers[currentIndex];
+
+      document.getElementById("qTopic").textContent = q.topic;
+      document.getElementById("qNumberLabel").textContent = `Pregunta ${currentIndex + 1} de ${total}`;
+      document.getElementById("qText").textContent = q.question;
+
+      const answeredCount = userAnswers.filter((a) => a !== null).length;
+      document.getElementById("progressBar").style.width = `${(answeredCount / total) * 100}%`;
+
+      const optionsContainer = document.getElementById("optionsContainer");
+      optionsContainer.innerHTML = "";
+      const letters = ["A", "B", "C", "D"];
+
+      q.shuffledOptions.forEach((opt, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "option-btn";
+
+        if (selectedMode === "study" && chosen !== null) {
+          btn.disabled = true;
+          if (idx === q.correctIndex) {
+            btn.classList.add("correct");
+          } else if (idx === chosen) {
+            btn.classList.add("incorrect");
+          }
+        } else if (chosen === idx) {
+          btn.classList.add("selected");
+        }
+
+        btn.innerHTML = `
+          <span class="option-letter">${letters[idx]}</span>
+          <span>${opt.text}</span>
+        `;
+        btn.onclick = () => selectOption(idx);
+        optionsContainer.appendChild(btn);
+      });
+
+      const feedbackEl = document.getElementById("feedbackContainer");
+      if (selectedMode === "study" && chosen !== null) {
+        const isRight = chosen === q.correctIndex;
+        feedbackEl.className = `feedback-box ${isRight ? "ok" : "bad"}`;
+        feedbackEl.innerHTML = `
+          <strong>${isRight ? "¡Respuesta correcta!" : "Respuesta incorrecta."}</strong><br>
+          ${q.explanation}
+        `;
+      } else {
+        feedbackEl.className = "hidden";
+      }
+
+      document.getElementById("prevBtn").disabled = currentIndex === 0;
+      const flagBtn = document.getElementById("flagBtn");
+      flagBtn.textContent = flagged[currentIndex] ? "Quitar marca" : "Marcar para revisar";
+      flagBtn.className = flagged[currentIndex] ? "btn btn-warning" : "btn btn-outline";
+
+      if (currentIndex === total - 1) {
+        document.getElementById("nextBtn").classList.add("hidden");
+        document.getElementById("finishBtn").classList.remove("hidden");
+      } else {
+        document.getElementById("nextBtn").classList.remove("hidden");
+        document.getElementById("finishBtn").classList.add("hidden");
+      }
+
+      renderNavGrid();
+    }
+
+    function selectOption(optionIdx) {
+      if (selectedMode === "study" && userAnswers[currentIndex] !== null) return;
+      userAnswers[currentIndex] = optionIdx;
+      renderQuestion();
+    }
+
+    function toggleFlag() {
+      flagged[currentIndex] = !flagged[currentIndex];
+      renderQuestion();
+    }
+
+    function prevQuestion() {
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentIndex < activeQuestions.length - 1) {
+        currentIndex++;
+        renderQuestion();
+      }
+    }
+
+    function goToQuestion(idx) {
+      currentIndex = idx;
+      renderQuestion();
+    }
+
+    function renderNavGrid() {
+      const grid = document.getElementById("navGrid");
+      grid.innerHTML = "";
+      activeQuestions.forEach((q, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "q-num-btn";
+        btn.textContent = idx + 1;
+
+        if (idx === currentIndex) btn.classList.add("current");
+        if (flagged[idx]) btn.classList.add("flagged");
+
+        const ans = userAnswers[idx];
+        if (ans !== null) {
+          if (selectedMode === "study") {
+            btn.classList.add(ans === q.correctIndex ? "study-correct" : "study-wrong");
+          } else {
+            btn.classList.add("answered");
+          }
+        }
+
+        btn.onclick = () => goToQuestion(idx);
+        grid.appendChild(btn);
+      });
+    }
+
+    function confirmFinish() {
+      const unanswered = userAnswers.filter((a) => a === null).length;
+      if (unanswered > 0) {
+        const ok = confirm(`Aún tienes ${unanswered} pregunta(s) sin responder. ¿Deseas finalizar y calificar el intento ahora?`);
+        if (!ok) return;
+      }
+      finishQuiz();
+    }
+
+    function finishQuiz() {
+      clearInterval(timerInterval);
+      document.getElementById("quizScreen").classList.add("hidden");
+      document.getElementById("resultsScreen").classList.remove("hidden");
+
+      let correctCount = 0;
+      let blankCount = 0;
+
+      activeQuestions.forEach((q, idx) => {
+        if (userAnswers[idx] === null) {
+          blankCount++;
+        } else if (userAnswers[idx] === q.correctIndex) {
+          correctCount++;
+        }
+      });
+
+      const total = activeQuestions.length;
+      const incorrectCount = total - correctCount - blankCount;
+      const grade = ((correctCount / total) * 10).toFixed(2);
+      const passed = parseFloat(grade) >= 7.0;
+
+      const circle = document.getElementById("scoreCircle");
+      circle.style.borderColor = passed ? "var(--success)" : "var(--danger)";
+      circle.style.background = passed ? "var(--success-bg)" : "var(--danger-bg)";
+      circle.style.color = passed ? "var(--success)" : "var(--danger)";
+
+      document.getElementById("finalGrade").textContent = grade;
+      document.getElementById("resultStatusTitle").textContent = passed
+        ? "¡Evaluación Aprobada!"
+        : "Evaluación No Aprobada — Requiere Repaso";
+
+      const identityParts = [];
+      if (studentInfo.name) identityParts.push(`Estudiante: ${studentInfo.name}`);
+      if (studentInfo.id) identityParts.push(`Módulo / Paralelo: ${studentInfo.id}`);
+      identityParts.push(`Modalidad: ${selectedMode === "study" ? "Modo Estudio" : "Modo Examen"}`);
+      document.getElementById("studentSummaryLine").textContent = identityParts.join(" • ");
+
+      document.getElementById("statCorrect").textContent = `${correctCount}/${total}`;
+      document.getElementById("statIncorrect").textContent = incorrectCount;
+      document.getElementById("statBlank").textContent = blankCount;
+      document.getElementById("statTime").textContent = formatTime(secondsElapsed);
+
+      const reviewList = document.getElementById("reviewList");
+      reviewList.innerHTML = "";
+
+      activeQuestions.forEach((q, idx) => {
+        const chosen = userAnswers[idx];
+        const isCorrect = chosen === q.correctIndex;
+        const userText = chosen !== null ? q.shuffledOptions[chosen].text : "Sin responder";
+        const correctText = q.shuffledOptions[q.correctIndex].text;
+
+        const item = document.createElement("div");
+        item.className = `review-item ${isCorrect ? "ok" : "bad"}`;
+        item.innerHTML = `
+          <h4>${idx + 1}. ${q.question}</h4>
+          <p class="review-meta"><strong>Tu respuesta:</strong> <span style="color:${isCorrect ? "var(--success)" : "var(--danger)"};">${userText}</span></p>
+          ${!isCorrect ? `<p class="review-meta"><strong>Respuesta correcta:</strong> <span style="color:var(--success);">${correctText}</span></p>` : ""}
+          <p class="review-meta" style="color:var(--muted); margin-top:0.4rem;"><em>Explicación:</em> ${q.explanation}</p>
+        `;
+        reviewList.appendChild(item);
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function copyReport() {
+      const grade = document.getElementById("finalGrade").textContent;
+      const correct = document.getElementById("statCorrect").textContent;
+      const time = document.getElementById("statTime").textContent;
+      const lines = [
+        "EVALUACIÓN FORMATIVA EN LÍNEA • CARRERA AGROPECUARIA",
+        "Asignatura: Fundamentos de la Producción Agrícola",
+        "Docente: Ing. Rommel Ramos Remache",
+        "Tema: Domesticación de las plantas cultivadas",
+        studentInfo.name ? `Estudiante: ${studentInfo.name}` : null,
+        studentInfo.id ? `Módulo / Paralelo: ${studentInfo.id}` : null,
+        `Calificación: ${grade} / 10 pts`,
+        `Aciertos: ${correct}`,
+        `Tiempo empleado: ${time}`
+      ].filter(Boolean).join("\n");
+
+      navigator.clipboard.writeText(lines).then(() => {
+        const toast = document.getElementById("copyToast");
+        toast.classList.remove("hidden");
+        setTimeout(() => toast.classList.add("hidden"), 3000);
+      });
+    }
+
+    function restartQuiz() {
+      clearInterval(timerInterval);
+      document.getElementById("resultsScreen").classList.add("hidden");
+      document.getElementById("quizScreen").classList.add("hidden");
+      document.getElementById("welcomeScreen").classList.remove("hidden");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  </script>
+</body>
+</html>
